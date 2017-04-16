@@ -1,16 +1,15 @@
 # Cordova Installed Apps Plugin
 
-Simple plugin that returns all of the installed apps, their names and their packages on android devices.
+Simple plugin that implement following two features:
+* detect special packages whether install on android device 
+* returns all of the installed apps, their names and their packages on android devices.
 
 ##Install
 
 recomended
 
-    $ sudo plugman install --platform android --project . --plugin https://github.com/KIvanow/installedApps.git
+    $ cordova plugin add https://github.com/leyserkids/installedApps.git --save
     
-alternatively
-
-    $ sudo plugman install --platform android --project . --plugin info.quatinus.cordova.plugins.installedapps
 
 ## Using
 
@@ -23,9 +22,22 @@ alternatively
         alert("Error calling Installed Apps Plugin");
     }
 
-    installedApps.getPackages( success, failure);
+    installedApps.havePackages(['com.grapecity.leyserkids.parent'], success, failure);
 ```
 
+  Or
+  
+ ```js 
+    // not recommended, as the name of app may not be unified
+    installedApps.haveNames(['Leyserkids-P'], success, failure);
+ ``` 
+ 
+  Or
+  
+ ```js 
+    installedApps.getPackages( success, failure);
+ ``` 
+ 
   Or
   
  ```js 
@@ -38,7 +50,8 @@ alternatively
     installedApps.getNamesAndPackages( success, failure);
 ```    
 
-Result will be array of objects, each containing name, package or both.
+* For haveXXX api, result will be array of booleans.
+* For getXXX api, result will be array of objects, each containing name, package or both.
 
 It works great with this plugin for starting apps from cordova http://plugins.cordova.io/#/package/com.hutchind.cordova.plugins.launcher
 

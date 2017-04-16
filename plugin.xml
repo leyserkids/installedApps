@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="info.quatinus.cordova.plugin.installedApps"
-        version="0.7.0">
+        id="com.grapecity.cordova.plugin.installedApps"
+        version="0.9.0">
 
   <name>InstalledApps</name>
 
@@ -19,11 +19,11 @@
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="InstalledApps">
-        <param name="android-package" value="info.quatinus.cordova.plugin.InstalledApps"/>
+        <param name="android-package" value="com.grapecity.cordova.plugin.InstalledApps"/>
       </feature>
     </config-file>
 
-    <source-file src="src/android/InstalledApps.java" target-dir="src/com/example/plugin/"/>
+    <source-file src="src/android/InstalledApps.java" target-dir="src/com/grapecity/plugin/"/>
   </platform>
 
 </plugin>
