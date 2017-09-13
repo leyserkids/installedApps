@@ -1,0 +1,26 @@
+{
+    "name": "cordova-plugin-installedapps",
+    "version": "0.9.0",
+    "description": "Detect installed apps",
+    "cordova": {
+      "id": "cordova-plugin-installedapps",
+      "platforms": [
+        "android"
+      ]
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/leyserkids/installedApps.git"
+    },
+    "keywords": [
+      "cordova",
+      "installedApps",
+      "cordova-android"
+    ],
+    "author": "LeySerKids team",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/leyserkids/installedApps.git/issues"
+    },
+    "homepage": "https://github.com/leyserkids/installedApps.git#readme"
+  }
