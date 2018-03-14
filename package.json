@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-installedapps",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "description": "Detect installed apps",
     "cordova": {
       "id": "cordova-plugin-installedapps",
