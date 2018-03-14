@@ -23,7 +23,7 @@
       </feature>
     </config-file>
 
-    <source-file src="src/android/InstalledApps.java" target-dir="src/com/grapecity/plugin/"/>
+    <source-file src="src/android/InstalledApps.java" target-dir="src/com/grapecity/cordova/plugin/"/>
   </platform>
 
 </plugin>
