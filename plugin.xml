@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="com.grapecity.cordova.plugin.installedApps"
-        version="0.9.1">
+        version="0.10.1">
 
   <name>InstalledApps</name>
 
@@ -24,6 +24,21 @@
     </config-file>
 
     <source-file src="src/android/InstalledApps.java" target-dir="src/com/grapecity/cordova/plugin/"/>
+  </platform>
+  
+  <!-- ios -->
+  <platform name="ios">
+      <config-file target="config.xml" parent="/*">
+          <feature name="InstalledApps">
+              <param name="ios-package" value="InstalledApps"/>
+          </feature>
+      </config-file>
+
+      <header-file src="src/ios/InstalledApps.h" />
+      <source-file src="src/ios/InstalledApps.m" />
+      <header-file src="src/ios/Diagnostic.h" />
+      <source-file src="src/ios/Diagnostic.m" />
+
   </platform>
 
 </plugin>

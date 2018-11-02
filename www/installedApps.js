@@ -27,6 +27,9 @@ module.exports = {
     },
     getNamesAndPackages: function (successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "InstalledApps", "getNamesAndPackages", []);
-    }
+    },
+	checkNotificationEnabled: function (successCallback, errorCallback) {
+	    cordova.exec(successCallback, errorCallback, "InstalledApps", "checkNotificationEnabled", []);
+	}
 
 };

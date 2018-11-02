@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.support.v4.app.NotificationManagerCompat;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -21,6 +22,9 @@ public class InstalledApps extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
+        if (action.equals("checkNotificationEnabled")) {
+            return this.checkNotificationEnabled(callbackContext);
+        }
         if (action.equals("havePackages")) {
             return this.havePackages(data, callbackContext);
         }
@@ -37,6 +41,24 @@ public class InstalledApps extends CordovaPlugin {
             return getNamesAndPackages(callbackContext);
         }
         return false;
+    }
+
+    private boolean checkNotificationEnabled(CallbackContext callbackContext){
+
+        try{
+			// 参考：https://github.com/dpa99c/cordova-diagnostic-plugin/blob/master/src/android/Diagnostic_Notifications.java
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this.cordova.getActivity().getApplicationContext());
+            boolean result = notificationManagerCompat.areNotificationsEnabled();
+
+            callbackContext.success(result?1:0);
+
+            return result;
+        }catch(Exception ex){
+
+            callbackContext.error(ex.toString());
+            return false;
+        }
+
     }
 
     private boolean havePackages(JSONArray data, CallbackContext callbackContext) throws JSONException {
