@@ -3,6 +3,7 @@
 Simple plugin that implement following two features:
 * detect special packages whether install on android device 
 * returns all of the installed apps, their names and their packages on android devices.
+* check whether the Remote Push Notification is enabled.
 
 ##Install
 
@@ -49,6 +50,13 @@ recomended
 ```js  
     installedApps.getNamesAndPackages( success, failure);
 ```    
+
+  Or
+  
+```js  
+	// In the 1st arg of the success callback, 0 stands for disabled while 1 stands for enabled
+    installedApps.checkNotificationEnabled( success, failure);
+``` 
 
 * For haveXXX api, result will be array of booleans.
 * For getXXX api, result will be array of objects, each containing name, package or both.

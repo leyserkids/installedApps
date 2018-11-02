@@ -1,29 +1,17 @@
+/**
+ Ning Wei 20181102
+ 增加iOS版的第一个接口：检查推送消息的启用情况
+ **/
+
 #import "InstalledApps.h"
 #import <Cordova/CDV.h>
 
 @implementation InstalledApps
 
-// Internal reference to Diagnostic singleton instance
-static Diagnostic* diagnostic;
-
-// Internal constants
-static NSString*const LOG_TAG = @"Diagnostic_Notifications[native]";
-
-static NSString*const REMOTE_NOTIFICATIONS_ALERT = @"alert";
-static NSString*const REMOTE_NOTIFICATIONS_SOUND = @"sound";
-static NSString*const REMOTE_NOTIFICATIONS_BADGE = @"badge";
-
-- (void)pluginInitialize {
-    
-    [super pluginInitialize];
-    
-    diagnostic = [Diagnostic getInstance];
-}
-
-
 - (void)checkNotificationEnabled:(CDVInvokedUrlCommand*)command {
     
     // 参考：https://github.com/dpa99c/cordova-diagnostic-plugin/blob/master/src/ios/Diagnostic_Notifications.m
+    // 因为不需要支持iOS7，简化了对应的实现。
     [self.commandDelegate runInBackground:^{
         @try {
             
@@ -34,33 +22,44 @@ static NSString*const REMOTE_NOTIFICATIONS_BADGE = @"badge";
                 UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
                 [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
                     BOOL userSettingEnabled = settings.authorizationStatus == UNAuthorizationStatusAuthorized;
-                    [self isRemoteNotificationsEnabledResult:userSettingEnabled:command];
+                    [self _isRemoteNotificationsEnabledResult:userSettingEnabled:command];
                 }];
 #endif
             } else{
                 // iOS 9
                 UIUserNotificationSettings *userNotificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
                 BOOL userSettingEnabled = userNotificationSettings.types != UIUserNotificationTypeNone;
-                [self isRemoteNotificationsEnabledResult:userSettingEnabled:command];
+                [self _isRemoteNotificationsEnabledResult:userSettingEnabled:command];
             }
             
         }
         @catch (NSException *exception) {
-            [diagnostic handlePluginException:exception:command];
+            
+            pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString: exception.reason];
+            
+            [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
         }
     }];
 }
 
-- (void) isRemoteNotificationsEnabledResult: (BOOL) userSettingEnabled : (CDVInvokedUrlCommand*)command
+- (void) _isRemoteNotificationsEnabledResult: (BOOL) userSettingEnabled : (CDVInvokedUrlCommand*)command
 {
+    // 参考：https://github.com/dpa99c/cordova-diagnostic-plugin/blob/master/src/ios/Diagnostic_Notifications.m
     // iOS 8+
     [self _isRegisteredForRemoteNotifications:^(BOOL remoteNotificationsEnabled) {
         BOOL isEnabled = remoteNotificationsEnabled && userSettingEnabled;
-        [diagnostic sendPluginResultBool:isEnabled:command];
+        
+    
+        pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsInt:isEnabled?1:0];
+        
+        [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
+        
     }];
 }
 
 - (void) _isRegisteredForRemoteNotifications:(void (^)(BOOL result))completeBlock {
+    
+    // 参考：https://github.com/dpa99c/cordova-diagnostic-plugin/blob/master/src/ios/Diagnostic_Notifications.m
     dispatch_async(dispatch_get_main_queue(), ^{
         BOOL registered = [UIApplication sharedApplication].isRegisteredForRemoteNotifications;
         if( completeBlock ){
