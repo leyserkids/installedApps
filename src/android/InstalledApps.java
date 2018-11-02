@@ -47,15 +47,20 @@ public class InstalledApps extends CordovaPlugin {
 
         try{
 			// 参考：https://github.com/dpa99c/cordova-diagnostic-plugin/blob/master/src/android/Diagnostic_Notifications.java
+			// 直接使用NotificationManagerCompat提供的方法获取配置信息
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this.cordova.getActivity().getApplicationContext());
-            boolean result = notificationManagerCompat.areNotificationsEnabled();
+            boolean isEnabled = notificationManagerCompat.areNotificationsEnabled();
 
-            callbackContext.success(result?1:0);
+			// 以整数形式反馈，保留扩展性
+            callbackContext.success(isEnabled?1:0);
 
-            return result;
+            return isEnabled;
+			
         }catch(Exception ex){
 
+			// 返回完整的错误信息
             callbackContext.error(ex.toString());
+			
             return false;
         }
 
