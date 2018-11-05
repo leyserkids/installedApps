@@ -36,8 +36,6 @@
 
       <header-file src="src/ios/InstalledApps.h" />
       <source-file src="src/ios/InstalledApps.m" />
-      <header-file src="src/ios/Diagnostic.h" />
-      <source-file src="src/ios/Diagnostic.m" />
 
   </platform>
 
